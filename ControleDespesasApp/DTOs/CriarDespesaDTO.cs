@@ -8,7 +8,7 @@ namespace ControleDespesasApp.DTOs
         public string Descricao { get; set; }
 
         [Required(ErrorMessage = "Valor é Obrigatoria")]
-        [Range(0.01,999999, ErrorMessage = "Valor deve ser maior que 0.")]
+        [Range(0.01,9999999, ErrorMessage = "Valor deve ser maior que 0.")]
         public double Valor { get; set; }
 
         [Required(ErrorMessage = "Data é Obrigatoria")]

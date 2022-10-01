@@ -1,4 +1,5 @@
-﻿using ControleDespesasApp.Models;
+﻿using ControleDespesasApp.DTOs;
+using ControleDespesasApp.Models;
 using ControleDespesasApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -16,9 +17,31 @@ namespace ControleDespesasApp.Controllers
             _despesaService=despesaService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var listDespesaDto = new ListDespesaDTO();
+
+            listDespesaDto.Items = await _despesaService.FindBy(listDespesaDto.DataInicio, listDespesaDto.DataFim);
+
+            return View(listDespesaDto);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Index(ListDespesaDTO listDespesaDto)
+        {
+            try
+            {
+                listDespesaDto.Items = await _despesaService.FindBy(listDespesaDto.DataInicio, listDespesaDto.DataFim);
+
+                return View(listDespesaDto);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("CustomError", ex.Message);
+                return View(listDespesaDto);
+            }
+            
         }
 
 

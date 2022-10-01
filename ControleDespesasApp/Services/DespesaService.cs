@@ -26,13 +26,17 @@ namespace ControleDespesasApp.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Despesa>> FindBy(DateTime datainicio, DateTime dataFim)
+        // filtro
+        public async Task<List<Despesa>> FindBy(DateTime dataInicio, DateTime dataFim)
         {
-            if (datainicio > dataFim)
+            //validação
+            if (dataInicio > dataFim)
                 throw new Exception("Data final deve ser maior que data inicial.");
             
-            var items = await _dbContext.Despesas.Where(d => d.Data >= datainicio &&  d.Data <= dataFim).AsNoTracking()
-                .ToListAsync();
+            var items = await _dbContext.Despesas
+                                                .Where(d => d.Data >= dataInicio &&  d.Data <= dataFim)
+                                                .AsNoTracking()
+                                                .ToListAsync();
 
             return items;
         }

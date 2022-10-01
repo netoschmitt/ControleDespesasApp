@@ -2,9 +2,10 @@ using ControleDespesasApp.Infra.Database;
 using ControleDespesasApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+// Add  context db
 builder.Services.AddDbContext<ControleDespesasContext>();
 
+// Add injeção dependencia
 builder.Services.AddScoped<IDespesaService, DespesaService>();
 
 // Add services to the container.
@@ -25,6 +26,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Despesa}/{action=Index}/{id?}");
 
 app.Run();
